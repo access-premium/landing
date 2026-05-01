@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Accès Exclusif</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+
+<!-- TikTok Pixel -->
 <script>
 !function (w, d, t) {
   w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
@@ -12,6 +14,7 @@
   ttq.page();
 }(window, document, 'ttq');
 </script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -37,7 +40,6 @@ body{
   gap:0;
 }
 
-/* Subtle glow top */
 body::before{
   content:'';
   position:fixed;
@@ -50,7 +52,6 @@ body::before{
   pointer-events:none;
 }
 
-/* Live dot */
 .live{
   display:inline-flex;
   align-items:center;
@@ -73,7 +74,6 @@ body::before{
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* Headline */
 h1{
   font-size:clamp(32px,9vw,54px);
   font-weight:800;
@@ -85,7 +85,6 @@ h1{
 
 .muted{color:rgba(255,255,255,.35)}
 
-/* Subline */
 .sub{
   font-size:14px;
   font-weight:400;
@@ -95,7 +94,6 @@ h1{
   animation:fadeUp .4s ease .15s both;
 }
 
-/* CTA */
 .btn{
   display:flex;
   align-items:center;
@@ -117,7 +115,6 @@ h1{
   overflow:hidden;
 }
 
-/* Shimmer on button */
 .btn::after{
   content:'';
   position:absolute;
@@ -144,7 +141,6 @@ h1{
 }
 .btn:hover .arr{transform:translateX(4px)}
 
-/* Trust */
 .trust{
   margin-top:20px;
   font-size:11px;
@@ -165,8 +161,6 @@ h1{
 
 <h1>Les prix que les<br><span class="muted">boutiques te cachent.</span></h1>
 
-
-
 <a href="https://www.mrfournisseur.com" class="btn" id="cta">
   Accéder aux fournisseurs <span class="arr">→</span>
 </a>
@@ -174,17 +168,18 @@ h1{
 <div class="trust">🔒 Accès sécurisé · Disponible maintenant</div>
 
 <script>
-if(typeof ttq!=='undefined'){
-  ttq.track('ViewContent',{
-    contents:[{content_id:'bridge',content_type:'product',content_name:'Acces Premium'}],
-    value:67.99,currency:'EUR'
+// Événement : arrivée sur la landing page (neutre, pas de prix)
+if(typeof ttq !== 'undefined'){
+  ttq.track('Landing', {
+    contents:[{content_id:'landing-bridge', content_name:'Landing Page Bridge'}]
   });
 }
-document.getElementById('cta').addEventListener('click',function(){
-  if(typeof ttq!=='undefined'){
-    ttq.track('InitiateCheckout',{
-      contents:[{content_id:'bridge',content_type:'product',content_name:'Acces Premium'}],
-      value:67.99,currency:'EUR'
+
+// Événement : clic sur le bouton (pas de confusion avec achat)
+document.getElementById('cta').addEventListener('click', function(){
+  if(typeof ttq !== 'undefined'){
+    ttq.track('ClickButton', {
+      contents:[{content_id:'landing-bridge', content_name:'Clic vers MisterFournisseur'}]
     });
   }
 });
