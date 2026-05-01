@@ -85,15 +85,6 @@ h1{
 
 .muted{color:rgba(255,255,255,.35)}
 
-.sub{
-  font-size:14px;
-  font-weight:400;
-  color:rgba(255,255,255,.4);
-  margin-bottom:36px;
-  line-height:1.5;
-  animation:fadeUp .4s ease .15s both;
-}
-
 .btn{
   display:flex;
   align-items:center;
@@ -110,6 +101,7 @@ h1{
   width:100%;
   max-width:400px;
   letter-spacing:-.3px;
+  margin-top:28px;
   animation:fadeUp .4s ease .2s both, pulse-btn 2.5s ease 1.2s infinite;
   position:relative;
   overflow:hidden;
@@ -168,14 +160,30 @@ h1{
 <div class="trust">🔒 Accès sécurisé · Disponible maintenant</div>
 
 <script>
-// Événement : arrivée sur la landing page (neutre, pas de prix)
+// Récupère le ttclid depuis l'URL si présent
+function getParam(name){
+  var params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
+
+// Construit l'URL destination avec ttclid pour relier le parcours
+var ttclid = getParam('ttclid');
+var destination = 'https://www.mrfournisseur.com';
+if(ttclid){
+  destination += '?ttclid=' + ttclid;
+}
+
+// Met à jour le lien du bouton avec ttclid
+document.getElementById('cta').href = destination;
+
+// Événement : arrivée sur la landing (neutre, sans prix)
 if(typeof ttq !== 'undefined'){
   ttq.track('Landing', {
     contents:[{content_id:'landing-bridge', content_name:'Landing Page Bridge'}]
   });
 }
 
-// Événement : clic sur le bouton (pas de confusion avec achat)
+// Événement : clic sur le bouton
 document.getElementById('cta').addEventListener('click', function(){
   if(typeof ttq !== 'undefined'){
     ttq.track('ClickButton', {
